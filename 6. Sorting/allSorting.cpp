@@ -113,7 +113,7 @@ void Merge(vector<int> &arr,int low,int mid,int high)
     }
     for(int i=low;i<=high;i++)
     {
-        
+
     }
     
 }
@@ -127,6 +127,39 @@ void mergeSort(vector<int> &arr,int low,int high)
         mergeSort(arr,mid+1,high);
         Merge(arr,low,mid,high);
     }
+}
+
+int Partition(vector<int> &arr,int low, int high)
+{
+    int pivot=arr[low];
+    int i=low, j=high;
+
+
+    while (i<j)
+    {
+        while (arr[i]<=pivot && i<=high-1)
+        {
+            i++;
+        }
+        while (arr[j]>pivot && j>=low+1)
+        {
+            j--;
+        }
+        
+        if(i<j) swap(arr[i],arr[j]);
+    }
+    swap(arr[low],arr[j]);
+    return j;
+}
+
+void quickSort(vector<int> &arr,int low,int high)
+{
+    if(low<high)
+    {
+        int pIndex=Partition(arr,low,high);
+        quickSort(arr,low,pIndex-1);
+        quickSort(arr,pIndex+1,high);
+    }   
 }
 
 
