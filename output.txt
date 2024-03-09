@@ -1,1 +1,8 @@
-1 21 32 32 33 67 112 
+Brute force Method
+Largest Element: 67
+
+Better Method
+Largest Element: 67
+
+Optimize method
+Largest Element: 67
