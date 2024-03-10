@@ -100,7 +100,7 @@ int secondLargest_optimized(vector<int> &arr, int n)
         {
             sLargest=largest;  
             largest=it;
-        }else if(it>sLargest)
+        }else if(it>sLargest && it<largest)
         {
             sLargest=it;
         }
