@@ -1,4 +1,1 @@
-Left Rotate:
-3 4 5 1 2 
-Right Rotate:
-4 5 1 2 3 
+3
