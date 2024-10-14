@@ -96,6 +96,90 @@ bool isPresent(Node<int>* head, int val){
     return false;
 }
 
+Node<int>* reomveTail(Node<int>* head){
+    if(head == nullptr || head->next == nullptr) return nullptr;
+
+    Node<int>* mover = head;
+
+    while (mover->next->next != nullptr)
+    {
+        mover = mover->next;
+    }
+
+    delete(mover->next);
+    mover->next = nullptr;
+
+    return head;
+
+}
+
+
+Node<int>* deleteK(Node<int>* head, int k){
+    if(head == nullptr) return head;
+
+
+    if(k == 1){
+        Node<int>* temp = head;
+        head = head->next;
+        delete head;
+        return head;
+    }
+
+    int count = 0;
+
+    Node<int>* mover = head;
+    Node<int>* prev = nullptr;
+
+    while (mover != nullptr)
+    {
+        count++;
+
+        if(count == k){
+            prev->next = mover->next;
+            delete mover;
+            break;
+        }
+        prev = mover;
+        mover = mover->next;
+    }
+
+
+    return head;
+
+
+}
+
+
+Node<int>* deleteVal(Node<int>* head, int val){
+    Node<int>* mover = head;
+
+    if(head == nullptr) return head;
+
+    if(head->data == val){
+        head = head->next;  
+        delete mover;
+        return head;
+    }
+
+    Node<int>* prev;
+
+    while (mover != nullptr){
+        
+        if(mover->data == val){
+            prev->next = mover->next;
+            delete mover;
+
+            break;
+        }
+        prev = mover;
+        mover = mover->next;
+    }
+
+    return head;
+
+    
+}
+
 int main(){
     
     vector<int> arr = {100,23,4,5,6,90};
@@ -111,9 +195,9 @@ int main(){
     else cout<<val<<" is NOT PRESENT in the list!"<<endl;
 
 
-    head = removeHead(head);
-
-    cout<<head->data<<endl;
+    // head = deleteK(head, 3);
+    head = deleteVal(head, 4);
+    showList(head);
 
 
     return 0;
