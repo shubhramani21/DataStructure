@@ -22,7 +22,7 @@ public:
     }
 };
 
-// Static member initialization outside the class
+
 template <typename T>
 int Node<T>::nodeCount = 0;
 
@@ -114,7 +114,7 @@ Node<int>* reomveTail(Node<int>* head){
 }
 
 
-Node<int>* deleteK(Node<int>* head, int k){
+Node<int>* deletePosition(Node<int>* head, int k){
     if(head == nullptr) return head;
 
 
@@ -180,25 +180,90 @@ Node<int>* deleteVal(Node<int>* head, int val){
     
 }
 
+Node<int>* insertHead(Node<int>* head, int val){
+    // returning to head pointer
+    return new Node<int>(val,head);
+}
+
+
+
+Node<int>* insertTail(Node<int>* head, int val){
+    Node<int>* temp = new Node<int>(val);
+
+    if(head == nullptr){
+        head = temp;
+        return head;
+    }
+    Node<int>* mover = head;
+    while (mover->next != nullptr)
+    {
+        mover = mover->next;
+    }
+    mover->next = temp;
+
+    return head;
+}
+
+
+
+Node<int>* insertPosition(Node<int>* head, int val, int pos){
+
+    if(head == nullptr){
+        if(pos == 1){
+            return new Node<int>(val);
+        }else{
+            return head;
+        }
+    }
+    if(pos == 1){
+        return new Node<int>(val, head);
+    }
+
+    int cnt = 0;
+    Node<int>* mover = head;
+    while (mover != nullptr)
+    {
+        cnt++;
+        if(cnt == (pos - 1)){
+            Node<int>* temp = new Node<int>(val,mover->next);
+            mover->next = temp;
+            break;
+        }
+        mover = mover->next;
+    }
+    
+    return head;
+}
+
+
 int main(){
     
     vector<int> arr = {100,23,4,5,6,90};
 
     Node<int>* head = createArray2List(arr);
-
-    showList(head);
-    int val = 10;
-    cout<<"Number of nodes: "<<Node<int>::nodeCount<<endl;
-    cout<<"Number of nodes: "<<getLenList(head)<<endl;
-
-    if(isPresent(head,val)) cout<<val<<" is PRESENT in the list"<<endl;
-    else cout<<val<<" is NOT PRESENT in the list!"<<endl;
-
-
-    // head = deleteK(head, 3);
-    head = deleteVal(head, 4);
     showList(head);
 
+    head= insertPosition(head,30,4);
+    showList(head);
+
+    head = insertTail(head,40);
+    showList(head);
+
+    head = insertHead(head,900);
+    showList(head);
+
+
+    head = deleteVal(head,23);
+    showList(head);
+
+    head = deletePosition(head,6);//considering non 0 indexing
+    showList(head);
+
+    head = removeHead(head);
+    showList(head);
+
+    head = deletePosition(head,2);
+    showList(head);
 
     return 0;
 

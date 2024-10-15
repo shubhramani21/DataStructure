@@ -1,5 +1,1 @@
-100 23 4 5 6 90 
-Number of nodes: 6
-Number of nodes: 6
-10 is NOT PRESENT in the list!
-23
+100 12 34 56 87 
