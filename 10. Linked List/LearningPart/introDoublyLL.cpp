@@ -147,6 +147,96 @@ void deleteNode(Node<int>* node){
 }
 
 
+Node<int>* insertHead(Node<int>* head, int val){
+
+    if(head == nullptr) {
+        return new Node<int>(val);
+    }
+
+    Node<int>* temp  = new Node<int>(val);
+
+    temp->next = head;
+    head->back = temp;
+    head = temp;
+
+
+    return head;
+}
+
+Node<int>* insertTail(Node<int>* head, int val){
+
+    if(head == nullptr){
+        return new Node<int>(val);
+    }
+
+
+    Node<int>* tail = head;
+
+    while (tail->next != nullptr)
+    {
+        tail = tail->next;
+    }
+    Node<int>* temp = new Node<int>(val, nullptr, tail);
+
+    tail->next = temp;
+
+    return head;
+}
+
+Node<int>* insertPosition(Node<int>* head,int val, int pos){
+
+    if(pos == 1){
+        if(head == nullptr){
+            return new Node<int>(val);
+        }else{
+           return insertHead(head, val);
+        }
+    }
+
+    int cnt = 0;
+
+    Node<int>* mover = head;
+
+    while (mover != nullptr)
+    {
+        cnt++;
+        if(cnt == pos) break;
+        mover = mover->next;
+    }
+
+
+    if(mover == nullptr && cnt < pos) return head;
+
+    if(mover == nullptr && cnt == pos) return insertTail(head, val);
+    
+
+    Node<int>* prev = mover->back;
+
+    Node<int>* temp = new Node<int>(val,mover,prev);
+
+    prev->next = temp;
+    mover->back = temp;
+
+    return head;
+}
+
+void insertNode(Node<int>* node,int val){
+
+    if(node == nullptr) return;
+
+    Node<int>* temp = new Node<int>(val,node,node->back);
+
+    Node<int>* prev = node->back;
+
+
+    if(prev != nullptr){
+        prev->next = temp;
+    }
+
+    node->back = temp;
+}
+
+
 void printLL(Node<int>* head){
     Node<int>* mover = head;
 
