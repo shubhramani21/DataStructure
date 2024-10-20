@@ -23,7 +23,6 @@ public:
     }
 };
 
-
 template <typename T>
 int Node<T>::nodeCount = 0;
 
@@ -47,47 +46,39 @@ Node<int>* createArray2List(vector<int> &arr){
 }
 
 
+Node<int>* oddEvenList(Node<int>* head){
 
+    Node<int>* odd = head;
+    Node<int>* even = head->next;
 
-Node<int>* reverseLL(Node<int>* head){
+    Node<int>* headEven = even;
 
-    Node<int>* curr = head;
-    Node<int>* front = head;
-    Node<int>* prev = nullptr;
-
-
-    while (curr != nullptr)
+    while (even != nullptr && even->next != nullptr)
     {
-        front = front->next;
-        curr->next = prev;
-        prev = curr;
-        curr = front;
+        odd->next = odd->next->next;
+        odd = odd->next;
+        even->next = even->next->next;
+        even = even->next;
+    }
+    odd->next = headEven;
+
+    return head;
+
+}
+
+
+
+int getLength(Node<int>* head){
+    Node<int>* mover = head;
+    int len = 0;
+    while (mover != nullptr)
+    {
+        len++;
+        mover = mover->next;
     }
     
-    return prev;
+    return len;
 }
-
-
-Node<int>* reverseLLRecursive(Node<int>* head){
-    if(head == nullptr || head->next == nullptr){
-        return head;
-    }
-
-
-    Node<int>* tailHead = reverseLLRecursive(head->next);
-
-    Node<int>* front = head->next;
-
-    front->next = head;
-    head->next =nullptr;
-
-    return tailHead;
-}
-
-
-
-Node<int>* reverseLLStack(Node<int>* head);
-
 
 
 void printLL(Node<int>* head){
@@ -105,22 +96,15 @@ void printLL(Node<int>* head){
 }
 
 
-
-
 int main(){
 
-    vector<int> arr = {2, 8, 10, 14, 16};
+    vector<int> arr = {1, 2, 3, 4, 5};
 
     Node<int>* head = createArray2List(arr);
 
-    cout<<"Before reverse: ";
+    head = oddEvenList(head);
+
     printLL(head);
-
-    head = reverseLLRecursive(head);
-
-    cout<<"After reverse: ";
-    printLL(head);
-
 
     return 0;
 }

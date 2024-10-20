@@ -23,7 +23,6 @@ public:
     }
 };
 
-
 template <typename T>
 int Node<T>::nodeCount = 0;
 
@@ -46,47 +45,53 @@ Node<int>* createArray2List(vector<int> &arr){
     return head;
 }
 
+Node<int>* getMiddleNode(Node<int>* head){
+    Node<int>* slow = head;
+    Node<int>* fast = head;
 
 
-
-Node<int>* reverseLL(Node<int>* head){
-
-    Node<int>* curr = head;
-    Node<int>* front = head;
-    Node<int>* prev = nullptr;
-
-
-    while (curr != nullptr)
+    while (fast != nullptr && fast->next != nullptr)
     {
-        front = front->next;
-        curr->next = prev;
-        prev = curr;
-        curr = front;
+        slow = slow->next;
+        fast = fast->next->next;
     }
     
-    return prev;
+
+    return slow;
 }
 
 
-Node<int>* reverseLLRecursive(Node<int>* head){
-    if(head == nullptr || head->next == nullptr){
-        return head;
+int getLength(Node<int>* head){
+    Node<int>* mover = head;
+    int len = 0;
+    while (mover != nullptr)
+    {
+        len++;
+        mover = mover->next;
     }
-
-
-    Node<int>* tailHead = reverseLLRecursive(head->next);
-
-    Node<int>* front = head->next;
-
-    front->next = head;
-    head->next =nullptr;
-
-    return tailHead;
+    
+    return len;
 }
 
+Node<int>* getMiddleNodeUsingN(Node<int>* head){
+    int n = getLength(head);
+    
+    int mid = (n / 2) + 1;
 
 
-Node<int>* reverseLLStack(Node<int>* head);
+    Node<int>* mover = head;
+    int cnt = 0;
+
+    while (mover != nullptr)
+    {
+        cnt++;
+        if(cnt == mid) break;;
+        mover = mover->next;
+    }
+    
+    return mover;
+
+}
 
 
 
@@ -105,21 +110,18 @@ void printLL(Node<int>* head){
 }
 
 
-
-
 int main(){
 
-    vector<int> arr = {2, 8, 10, 14, 16};
+    vector<int> arr = {2, 8, 10, 14, 16, 20};
 
     Node<int>* head = createArray2List(arr);
 
-    cout<<"Before reverse: ";
+    cout<<"Linked List: ";
     printLL(head);
 
-    head = reverseLLRecursive(head);
-
-    cout<<"After reverse: ";
-    printLL(head);
+    cout<<"List from Middle Node: ";
+    Node<int>* mid = getMiddleNodeUsingN(head);
+    printLL(mid);
 
 
     return 0;

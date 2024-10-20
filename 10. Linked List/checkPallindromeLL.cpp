@@ -23,7 +23,6 @@ public:
     }
 };
 
-
 template <typename T>
 int Node<T>::nodeCount = 0;
 
@@ -46,48 +45,43 @@ Node<int>* createArray2List(vector<int> &arr){
     return head;
 }
 
+bool isPalindrome(Node<int>* head) {
+    stack<int> st;
 
 
+    Node<int>* mover = head;
 
-Node<int>* reverseLL(Node<int>* head){
-
-    Node<int>* curr = head;
-    Node<int>* front = head;
-    Node<int>* prev = nullptr;
-
-
-    while (curr != nullptr)
+    while (mover != nullptr)
     {
-        front = front->next;
-        curr->next = prev;
-        prev = curr;
-        curr = front;
+        st.push(mover->data);
+        mover = mover->next;
+    }
+
+    mover = head;
+
+    while (mover != nullptr)
+    {
+        if(st.top() != mover->data) return false;
+        st.pop();
+        mover = mover->next;
     }
     
-    return prev;
+
+    return true;
+        
 }
 
-
-Node<int>* reverseLLRecursive(Node<int>* head){
-    if(head == nullptr || head->next == nullptr){
-        return head;
+int getLength(Node<int>* head){
+    Node<int>* mover = head;
+    int len = 0;
+    while (mover != nullptr)
+    {
+        len++;
+        mover = mover->next;
     }
-
-
-    Node<int>* tailHead = reverseLLRecursive(head->next);
-
-    Node<int>* front = head->next;
-
-    front->next = head;
-    head->next =nullptr;
-
-    return tailHead;
+    
+    return len;
 }
-
-
-
-Node<int>* reverseLLStack(Node<int>* head);
-
 
 
 void printLL(Node<int>* head){
@@ -105,22 +99,19 @@ void printLL(Node<int>* head){
 }
 
 
-
-
 int main(){
 
-    vector<int> arr = {2, 8, 10, 14, 16};
+    vector<int> arr = {1, 2, 3, 2, 1};
 
     Node<int>* head = createArray2List(arr);
 
-    cout<<"Before reverse: ";
+    if(isPalindrome(head)){
+        cout<<"Pallindrome"<<endl;
+    }else{
+        cout<<"Not Pallindrome"<<endl;
+    }
+
     printLL(head);
-
-    head = reverseLLRecursive(head);
-
-    cout<<"After reverse: ";
-    printLL(head);
-
 
     return 0;
 }
