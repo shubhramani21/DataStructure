@@ -25,7 +25,7 @@ public:
         return (currSize == 0);
     }
 
-    void push(int n){
+    void enqueue(int n){
         if(start == -1 && end == -1){
             start++;
             end++;
@@ -43,7 +43,7 @@ public:
         arr[end] = n;
     }
 
-    int pop(){
+    int dequeue(){
         if(isEmpty()){
             cout<<"Stack is empty"<<endl;
             return -1;
@@ -63,7 +63,7 @@ public:
     }
 
 
-    int top(){
+    int peek(){
         if(isEmpty()){
             cout<<"Stack is empty"<<endl;
             return -1;
