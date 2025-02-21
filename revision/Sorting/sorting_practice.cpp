@@ -1,117 +1,82 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-vector<int> selectionSort(vector<int> arr){
-    for (int i = 0; i < arr.size(); i++)
-    {
-        int min = i;
-        for (int j = i; j < arr.size(); j++)
-        {
-            if(arr[min] > arr[j]){
-                min = j;
+
+void bubbleSort(vector<int> &arr){
+    int n = arr.size();
+
+    for(int i = n - 1; i >= 1; i++){// this for loop is just for passes
+
+        bool isSwap = false;
+
+        for(int j = 0; j <= i; j++){// this for loop is for swaping and putting the largest element on the extreme left 
+            if(arr[j + 1] < arr[j]){
+                swap(arr[j], arr[j + 1]);
+                isSwap = true;
             }
+            
         }
-        if(min != i){
-            swap(arr[min],arr[i]);
-        }
+        if(!isSwap) break;
     }
-    return arr;
+
+    cout<<"Using Bubble Sort..."<<endl;
+    cout<<"Array is now sorted"<<endl;
 }
 
-void merge(vector<int> &arr, int low, int mid, int high){
-    vector<int> temp;
-    int left = low;
-    int right = mid+1;
+void insertionsort(vector<int> &arr){
+    int n = arr.size();
 
-    while (left <= mid && right <= high)
-    {
-        if(arr[left] <= arr[right]){
-            temp.push_back(arr[left]);
-            left++;
-        }else{
-            temp.push_back(arr[right]);
-            right++;
+    // in insertion sort we try to put the elements in their correct position by comparing them with previous elements
+    // it is similar to finding the correct position of an element in an sorted array
+
+
+    for(int i = 1; i <= n - 2; i++){// this for loop is used to iteratre each element till second last element since we try to put the last element in its correct position
+        int j = i;
+
+        while (j > 0 && arr[j - 1] > arr[j])
+        {
+
+            // finding and putting the element in the correct position
+            swap(arr[j - 1], arr[j]);
+            j--;
         }
+        
     }
 
-    while (left <= mid)
+    cout<<"Using Insertion Sort..."<<endl;
+    cout<<"Array is now sorted"<<endl;
+}
+
+
+
+void selectionSort(vector<int> &arr){
+    int n = arr.size();
+    // here we find the minimum element and put it in the start of the array in each iteration
+    for(int i = 0; i <= n - 2; i++){
+
+        int min = i;
+
+        for(int j = i; j <= n; j++){
+
+            if(arr[min] > arr[j]) min = j;
+
+        }
+
+        swap(arr[min], arr[i]);
+    }
+}
+
+
+int main(){
+
+    int n;
+    cin>>n;
+    vector<int> arr(n);
+
+    for (int i = 0; i < n; i++)
     {
-        temp.push_back(arr[left]);
-        left++;
+        cin>>arr[i];
     }
     
-    while (right <= high)
-    {
-        temp.push_back(arr[right]);
-        right++;
-    }
-    
-    for (int i = low; i <= high; i++)
-    {
-        arr[i] = temp[i-low];
-    }
-    
-
-}
-
-void mergeSort(vector<int> &arr, int low,int high){
-
-    if(low < high){
-        int mid = (low+high)/2;
-
-        mergeSort(arr,low,mid);
-        mergeSort(arr,mid+1,high);
-
-        merge(arr,low,mid,high);
-
-    }
-}
-int partition(vector<int> &arr, int low, int high){
-    int pivot = arr[low];
-    int i = low;
-    int j = high;
-
-
-    while (i < j)
-    {
-        while (arr[i] <= pivot && i<= high-1) i++;
-        while (arr[j] > pivot && j >= low+1) j--;
-
-        if(i < j) swap(arr[i], arr[j]);
-    }
-    swap(arr[low],arr[j]);
-
-    return j;
-}
-
-void quickSort(vector<int> &arr, int low, int high){
-
-    if(low<high){
-        int pIndex = partition(arr,low,high);
-
-        quickSort(arr,low,pIndex-1);
-        quickSort(arr,pIndex+1,high);
-    }
-}
-
-
-
-
-int main()
-{
-    vector<int> arr = {9, 4, 7, 6, 3, 1, 5}  ;
-    int n = 7;
-
-    cout << "Before Sorting Array: " << endl;
-    for (int i = 0; i < n; i++) {
-        cout << arr[i] << " "  ;
-    }
-    cout << endl;
-    quickSort(arr, 0, n - 1);
-    cout << "After Sorting Array: " << endl;
-    for (int i = 0; i < n; i++) {
-        cout << arr[i] << " "  ;
-    }
-    cout << endl;
-    return 0 ;
+    return 0;
 }
